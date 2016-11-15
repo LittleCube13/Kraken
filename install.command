@@ -1,0 +1,2 @@
+cd ~/THEKRAKEN/src
+make
