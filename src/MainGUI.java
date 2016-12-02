@@ -5,7 +5,6 @@ import java.awt.*;
 
 public class MainGUI extends Kraken implements ActionListener {
 	
-	static MainGUI app = new MainGUI();
 	static JFrame frame = new JFrame();
 	static JPanel win = new JPanel();
 	static JMenuBar bar = new JMenuBar();
@@ -19,6 +18,8 @@ public class MainGUI extends Kraken implements ActionListener {
 	static JRadioButtonMenuItem nimbus = new JRadioButtonMenuItem("Nimbus");
 	static JButton map = new JButton("Map");
 	static JButton ccs = new JButton("CCScript");
+	static JButton npcs = new JButton("NPCs");
+	static JButton battle = new JButton("Battle");
 	
 	public void actionPerformed(ActionEvent e) {
 		Object src = e.getSource();
@@ -26,11 +27,20 @@ public class MainGUI extends Kraken implements ActionListener {
 		if (src == map) {
 		}
 		
+		if (src == npcs) {
+			npce.init();
+		}
+		
+		if (src == ccs) {
+			ccsm.init();
+		}
+		
 		if (src == sys) {
 			try {
 			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
 			SwingUtilities.updateComponentTreeUI(frame);
-			frame.pack();
+			npce.lafUpdate();
+			ccsm.lafUpdate();
 		} catch (Exception exc) {}
 		}
 		
@@ -38,7 +48,8 @@ public class MainGUI extends Kraken implements ActionListener {
 			try {
 			UIManager.setLookAndFeel("javax.swing.plaf.nimbus.NimbusLookAndFeel");
 			SwingUtilities.updateComponentTreeUI(frame);
-			frame.pack();
+			npce.lafUpdate();
+			ccsm.lafUpdate();
 		} catch (Exception exc) {}
 		}
 		
@@ -46,8 +57,13 @@ public class MainGUI extends Kraken implements ActionListener {
 			try {
 			UIManager.setLookAndFeel("javax.swing.plaf.metal.MetalLookAndFeel");
 			SwingUtilities.updateComponentTreeUI(frame);
-			frame.pack();
+			npce.lafUpdate();
+			ccsm.lafUpdate();
 		} catch (Exception exc) {}
+		}
+		
+		if (src == exit) {
+			System.exit(0);
 		}
 		
 }
@@ -57,24 +73,39 @@ public class MainGUI extends Kraken implements ActionListener {
 				sys.setText("Mac OS X");
 			} else { sys.setText("System"); }
 		frame.add(win);
-		frame.setSize(175, 200);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		win.add(ccs);
+		win.add(map);
+		win.add(npcs);
+		win.add(battle);
+		map.setEnabled(false);
+		npcs.setEnabled(false);
+		battle.setEnabled(false);
+		ccs.addActionListener(gui);
+		map.addActionListener(gui);
+		npcs.addActionListener(gui);
+		battle.addActionListener(gui);
 		ccs.setPreferredSize(new Dimension(175, 26));
-//		win.add(map);
 		map.setPreferredSize(new Dimension(175, 26));
+		npcs.setPreferredSize(new Dimension(175, 26));
+		battle.setPreferredSize(new Dimension(175, 26));
 		frame.setJMenuBar(bar);
 		bar.add(file);
 		file.add(laf);
+		file.add(exit);
+		exit.setAccelerator(ctrlq);
+		exit.addActionListener(gui);
 		laf.add(sys);
 		laf.add(metal);
 		laf.add(nimbus);
 		g.add(sys);
 		g.add(metal);
 		g.add(nimbus);
-		sys.addActionListener(app);
-		metal.addActionListener(app);
-		nimbus.addActionListener(app);
+		sys.addActionListener(gui);
+		metal.addActionListener(gui);
+		nimbus.addActionListener(gui);
 		frame.setVisible(true);
+		frame.setSize(190, 174);
+		frame.setResizable(false);
 	}
 }

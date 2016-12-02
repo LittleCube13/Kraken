@@ -2,4 +2,9 @@
 
 whatever:
 	javac *.java
-	jar cvfe ~/THEKRAKEN/Kraken.jar Kraken *.class
+	jar cvfe ~/THEKRAKEN/Kraken.jar Kraken *
+	rm *.class
+
+dev:
+	javac *.java
+	jar cvfe ~/THEKRAKEN/Kraken.jar Kraken *
