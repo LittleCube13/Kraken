@@ -15,6 +15,8 @@ public class CCScriptModule extends Kraken implements ActionListener {
 	static File f;
 	static File fs;
 	public static File ROM;
+	public static File hackROM;
+	static byte[] rombytes;
 	static FileInputStream is;
 	static JMenu file = new JMenu("File");
 	static JMenuItem newf = new JMenuItem("New");
@@ -77,14 +79,7 @@ public class CCScriptModule extends Kraken implements ActionListener {
 				
 				if (fcs == JFileChooser.APPROVE_OPTION) {
 				ROM = fco.getSelectedFile();
-				try {
-				is = new FileInputStream(ROM);
-				is.read(rombytes, 0, rombytes.length);
-				is.close();
-				File fi = new File(ROM.getParent() + "/title_screen.ccs");
-				ttccs.CCSFile(rombytes, fi);
-				dia.showMessageDialog(frame, "Kraken has converted your title screen to a CCS file.", "Success!", JOptionPane.INFORMATION_MESSAGE);
-				} catch (IOException whatever) { System.err.println(whatever.toString()); }
+				dia.showMessageDialog(frame, "Kraken has created a ccs file of your diff.", "Success!", JOptionPane.INFORMATION_MESSAGE);
 			}
 		}
 		
