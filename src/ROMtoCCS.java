@@ -3,8 +3,6 @@ import java.util.*;
 import javax.xml.bind.*;
 
 public class ROMtoCCS extends Kraken {
-<<<<<<< HEAD
-=======
 	
 	static FileInputStream ROMreader;
 	static FileInputStream hackreader;
