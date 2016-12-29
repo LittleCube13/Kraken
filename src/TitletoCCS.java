@@ -7,7 +7,7 @@ public class TitletoCCS extends Kraken {
 	static String outbyte = "";
 	static String ccsfile;
 	
-	public void CCSFile(File ROM, File fil) {
+	public void CCSFile(File ROM, File fil, byte[] b) {
 		
 		byte[] titlescreen = Arrays.copyOfRange(b, 0x21B07C, 0x21D1AE);
 		String bytes = DatatypeConverter.printHexBinary(titlescreen);
