@@ -16,6 +16,8 @@ public class MainGUI extends Kraken implements ActionListener {
 	static JRadioButtonMenuItem sys = new JRadioButtonMenuItem("", true);
 	static JRadioButtonMenuItem metal = new JRadioButtonMenuItem("Metal");
 	static JRadioButtonMenuItem nimbus = new JRadioButtonMenuItem("Nimbus");
+	static JFileChooser fco = new JFileChooser();
+	static File currentProject;
 	static JButton map = new JButton("Map");
 	static JButton ccs = new JButton("CCScript");
 	static JButton npcs = new JButton("NPCs");
@@ -23,6 +25,16 @@ public class MainGUI extends Kraken implements ActionListener {
 	
 	public void actionPerformed(ActionEvent e) {
 		Object src = e.getSource();
+		
+		if (src == open) {
+			SwingUtilities.updateComponentTreeUI(fco);
+			fco.setFileSelectionMode(JFileChooser.FILES_ONLY);
+				int fcs = fco.showOpenDialog(null);
+				
+				if (fcs == JFileChooser.APPROVE_OPTION) {
+				currentProject = new File(fco.getSelectedFile().getParent());
+			}
+		}
 		
 		if (src == map) {
 		}
@@ -74,10 +86,17 @@ public class MainGUI extends Kraken implements ActionListener {
 			} else { sys.setText("System"); }
 		frame.add(win);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		win.add(ccs);
-		win.add(map);
-		win.add(npcs);
-		win.add(battle);
+		GroupLayout layout = new GroupLayout(win);
+		ccs.setPreferredSize(new Dimension(175, 26));
+		map.setPreferredSize(new Dimension(175, 26));
+		npcs.setPreferredSize(new Dimension(175, 26));
+		battle.setPreferredSize(new Dimension(175, 26));
+		win.setLayout(layout);
+		layout.setAutoCreateGaps(true);
+		layout.setAutoCreateContainerGaps(true);
+		layout.setHorizontalGroup(layout.createParallelGroup().addComponent(ccs).addComponent(map).addComponent(npcs).addComponent(battle));
+		layout.setVerticalGroup(layout.createSequentialGroup().addComponent(ccs).addComponent(map).addComponent(npcs).addComponent(battle));
+		layout.linkSize(ccs, map, npcs, battle);
 		map.setEnabled(false);
 		npcs.setEnabled(false);
 		battle.setEnabled(false);
@@ -85,14 +104,13 @@ public class MainGUI extends Kraken implements ActionListener {
 		map.addActionListener(gui);
 		npcs.addActionListener(gui);
 		battle.addActionListener(gui);
-		ccs.setPreferredSize(new Dimension(175, 26));
-		map.setPreferredSize(new Dimension(175, 26));
-		npcs.setPreferredSize(new Dimension(175, 26));
-		battle.setPreferredSize(new Dimension(175, 26));
 		frame.setJMenuBar(bar);
 		bar.add(file);
+		file.add(open);
 		file.add(laf);
 		file.add(exit);
+		open.setAccelerator(ctrlo);
+		open.addActionListener(gui);
 		exit.setAccelerator(ctrlq);
 		exit.addActionListener(gui);
 		laf.add(sys);
@@ -105,7 +123,8 @@ public class MainGUI extends Kraken implements ActionListener {
 		metal.addActionListener(gui);
 		nimbus.addActionListener(gui);
 		frame.setVisible(true);
-		frame.setSize(190, 174);
+		frame.pack();
+//		frame.setSize(190, 174);
 		frame.setResizable(false);
 	}
 }

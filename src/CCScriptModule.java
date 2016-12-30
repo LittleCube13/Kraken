@@ -8,8 +8,7 @@ import java.util.*;
 public class CCScriptModule extends Kraken implements ActionListener {
 	
 	static JFrame frame = new JFrame("CCScript Utility");
-	static JFrame fcframe = new JFrame();
-	static JPanel tScTab = new JPanel();
+	static JPanel diffTab = new JPanel();
 	static JFileChooser fco = new JFileChooser();
 	static JMenuBar bar = new JMenuBar();
 	static File f;
@@ -23,7 +22,10 @@ public class CCScriptModule extends Kraken implements ActionListener {
 	static JMenuItem open = new JMenuItem("Open Kraken CCS File");
 	static JMenuItem save = new JMenuItem("Save");
 	static JMenuItem close = new JMenuItem("Close");
-	static JButton openROM = new JButton("Open ROM");
+	static JButton openROM = new JButton("Open Clean ROM");
+	static JButton hackROMbutton = new JButton("Open Hacked ROM");
+	static JTextField currentCleanFile = new JTextField(20);
+	static JTextField currentHackFile = new JTextField(20);
 	static JTabbedPane tabp = new JTabbedPane(SwingConstants.TOP, JTabbedPane.WRAP_TAB_LAYOUT);
 	static JOptionPane dia = new JOptionPane();
 	static boolean initDone = false;
@@ -51,14 +53,21 @@ public class CCScriptModule extends Kraken implements ActionListener {
 		close.addActionListener(ccsm);
 		close.setAccelerator(ctrlw);
 		frame.add(tabp);
-		tabp.addTab("Title Screen to CCS", tScTab);
-		tScTab.add(openROM);
+		tabp.addTab("ROM Diff to CCS", diffTab);
+		initTabs();
 		openROM.addActionListener(ccsm);
 		fco.setFileFilter(new FileNameExtensionFilter("SNES ROMs: .smc, .sfc", "smc", "sfc"));
 		fco.setAcceptAllFileFilterUsed(false);
 		lafUpdate();
 		initDone = true;
 	} else { frame.setVisible(true); }
+	}
+	
+	public void initTabs() {
+		diffTab.add(openROM);
+		diffTab.add(currentCleanFile);
+		diffTab.add(hackROMbutton);
+		diffTab.add(currentHackFile);
 	}
 	
 	public void lafUpdate() {
@@ -75,7 +84,7 @@ public class CCScriptModule extends Kraken implements ActionListener {
 		if (src == openROM) {
 			SwingUtilities.updateComponentTreeUI(fco);
 			fco.setFileSelectionMode(JFileChooser.FILES_ONLY);
-				int fcs = fco.showOpenDialog(fcframe);
+				int fcs = fco.showOpenDialog(null);
 				
 				if (fcs == JFileChooser.APPROVE_OPTION) {
 				ROM = fco.getSelectedFile();
@@ -86,7 +95,7 @@ public class CCScriptModule extends Kraken implements ActionListener {
 		if (src == open) {
 			SwingUtilities.updateComponentTreeUI(fco);
 			fco.setFileSelectionMode(JFileChooser.FILES_ONLY);
-				int fcs = fco.showOpenDialog(fcframe);
+				int fcs = fco.showOpenDialog(null);
 				
 				if (fcs == JFileChooser.APPROVE_OPTION) {
 				f = fco.getSelectedFile();
