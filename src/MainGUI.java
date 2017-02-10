@@ -46,6 +46,7 @@ public class MainGUI extends Kraken implements ActionListener {
 				ccs.setEnabled(true);
 				misc.setEnabled(true);
 				prfs.setLastProject(currentProject);
+				misced.getPointers();
 				System.out.println(currentProject.toString());
 			}
 		}
