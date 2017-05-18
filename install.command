@@ -1,2 +1,2 @@
-cd ~/THEKRAKEN/src
+cd Code/THEKRAKEN/kraken
 make
