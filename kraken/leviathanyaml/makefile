@@ -1,2 +1,2 @@
 all:
-	javac -classpath Yaml EntryYaml.java
+	javac *.java

@@ -35,7 +35,6 @@ public class CCScriptModule extends Kraken implements ActionListener {
 	
 	public void init() {
 	if (!initDone) {
-		frame.setVisible(true);
 		frame.setJMenuBar(bar);
 		bar.add(file);
 //		file.addSeparator();
@@ -54,6 +53,7 @@ public class CCScriptModule extends Kraken implements ActionListener {
 		fco.setAcceptAllFileFilterUsed(false);
 		lafUpdate();
 		frame.pack();
+		frame.setVisible(true);
 		initDone = true;
 	} else { lafUpdate(); frame.setVisible(true); }
 	}

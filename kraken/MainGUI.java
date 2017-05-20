@@ -180,10 +180,10 @@ public class MainGUI extends Kraken implements ActionListener {
 		sys.addActionListener(gui);
 		metal.addActionListener(gui);
 		nimbus.addActionListener(gui);
-		frame.setVisible(true);
 		frame.pack();
 //		frame.setSize(190, 174);
 		frame.setResizable(false);
+		frame.setVisible(true);
 		fco.setFileFilter(new FileNameExtensionFilter("Snakey snakey eggs and bakey (.snake)", "snake"));
 		fco.setAcceptAllFileFilterUsed(false);
 		if (opencli) {
