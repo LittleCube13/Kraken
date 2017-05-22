@@ -16,6 +16,7 @@ public class Kraken {
 	public static KeyStroke ctrls = KeyStroke.getKeyStroke(KeyEvent.VK_S, InputEvent.CTRL_MASK);
 	public static KeyStroke ctrlw = KeyStroke.getKeyStroke(KeyEvent.VK_W, InputEvent.CTRL_MASK);
 	public static KeyStroke ctrln = KeyStroke.getKeyStroke(KeyEvent.VK_N, InputEvent.CTRL_MASK);
+	public static KeyStroke ctrlr = KeyStroke.getKeyStroke(KeyEvent.VK_R, InputEvent.CTRL_MASK);
 	
 	public static void main(String args[]) {
 		if (args.length > 0) {

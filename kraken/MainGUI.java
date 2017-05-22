@@ -16,6 +16,7 @@ public class MainGUI extends Kraken implements ActionListener {
 	static JCheckBoxMenuItem openlastproject = new JCheckBoxMenuItem("Load Last Project at Startup");
 	static JMenu laf = new JMenu("Look and Feel");
 	static JMenuItem open = new JMenuItem("Open");
+	static JMenuItem reload = new JMenuItem("Reload");
 	static JMenuItem save = new JMenuItem("Save");
 	static JMenuItem exit = new JMenuItem("Exit");
 	static ButtonGroup g = new ButtonGroup();
@@ -39,18 +40,15 @@ public class MainGUI extends Kraken implements ActionListener {
 		if (src == open) {
 			SwingUtilities.updateComponentTreeUI(fco);
 			fco.setFileSelectionMode(JFileChooser.FILES_ONLY);
-				int fcs = fco.showOpenDialog(null);
-				
-				if (fcs == JFileChooser.APPROVE_OPTION) {
-				currentProject = new File(fco.getSelectedFile().getParent());
-				projectString = currentProject.toString();
-				frame.setTitle(projectString.substring(projectString.lastIndexOf("/") + 1, projectString.length()));
-				ccs.setEnabled(true);
-				misc.setEnabled(true);
-				prfs.setLastProject(currentProject);
-				misced.getPointers();
-				System.out.println(currentProject.toString());
+			int fcs = fco.showOpenDialog(null);
+			
+			if (fcs == JFileChooser.APPROVE_OPTION) {
+				openProject(fco.getSelectedFile().getParent());
 			}
+		}
+		
+		if (src == reload) {
+			openProject(projectString);
 		}
 		
 		if (src == save) {
@@ -74,41 +72,36 @@ public class MainGUI extends Kraken implements ActionListener {
 		
 		if (src == sys) {
 			try {
-			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-			SwingUtilities.updateComponentTreeUI(frame);
-			npce.lafUpdate();
-			ccsm.lafUpdate();
-			misced.lafUpdate();
-			frame.pack();
-			LAF = 0;
-			prfs.setLAF(LAF);
-		} catch (Exception exc) {}
+				if (UIManager.getSystemLookAndFeelClassName() == "javax.swing.plaf.metal.MetalLookAndFeel") {
+					UIManager.setLookAndFeel("com.sun.java.swing.plaf.gtk.GTKLookAndFeel");
+				} else {
+					UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+				}
+				lafUpdate();
+				frame.pack();
+				LAF = 0;
+				prfs.setLAF(LAF);
+			} catch (Exception exc) {}
 		}
 		
 		if (src == nimbus) {
 			try {
-			UIManager.setLookAndFeel("javax.swing.plaf.nimbus.NimbusLookAndFeel");
-			SwingUtilities.updateComponentTreeUI(frame);
-			npce.lafUpdate();
-			ccsm.lafUpdate();
-			misced.lafUpdate();
-			frame.pack();
-			LAF = 1;
-			prfs.setLAF(LAF);
-		} catch (Exception exc) {}
+				UIManager.setLookAndFeel("javax.swing.plaf.nimbus.NimbusLookAndFeel");
+				lafUpdate();
+				frame.pack();
+				LAF = 1;
+				prfs.setLAF(LAF);
+			} catch (Exception exc) {}
 		}
 		
 		if (src == metal) {
 			try {
-			UIManager.setLookAndFeel("javax.swing.plaf.metal.MetalLookAndFeel");
-			SwingUtilities.updateComponentTreeUI(frame);
-			npce.lafUpdate();
-			ccsm.lafUpdate();
-			misced.lafUpdate();
-			frame.pack();
-			LAF = 2;
-			prfs.setLAF(LAF);
-		} catch (Exception exc) {}
+				UIManager.setLookAndFeel("javax.swing.plaf.metal.MetalLookAndFeel");
+				lafUpdate();
+				frame.pack();
+				LAF = 2;
+				prfs.setLAF(LAF);
+			} catch (Exception exc) {}
 		}
 		
 		if (src == openlastproject) {
@@ -120,6 +113,24 @@ public class MainGUI extends Kraken implements ActionListener {
 		}
 		
 }
+	
+	static void lafUpdate() {
+		SwingUtilities.updateComponentTreeUI(frame);
+		npce.lafUpdate();
+		ccsm.lafUpdate();
+		misced.lafUpdate();
+	}
+	
+	static void openProject(String proj) {
+		currentProject = new File(proj);
+		projectString = proj;
+		frame.setTitle(projectString.substring(projectString.lastIndexOf("/") + 1, projectString.length()));
+		misced.getPointers();
+		ccs.setEnabled(true);
+		misc.setEnabled(true);
+		prfs.setLastProject(currentProject);
+		System.out.println(currentProject.toString());
+	}
 	
 	public static void initGUI(boolean opencli, String projecttoopen) {
 	
@@ -162,11 +173,14 @@ public class MainGUI extends Kraken implements ActionListener {
 		options.add(openlastproject);
 		openlastproject.addActionListener(gui);
 		file.add(open);
+		file.add(reload);
 		file.add(save);
-		file.add(laf);
+		options.add(laf);
 		file.add(exit);
 		open.setAccelerator(ctrlo);
 		open.addActionListener(gui);
+		reload.setAccelerator(ctrlr);
+		reload.addActionListener(gui);
 		save.setAccelerator(ctrls);
 		save.addActionListener(gui);
 		exit.setAccelerator(ctrlq);
@@ -183,7 +197,6 @@ public class MainGUI extends Kraken implements ActionListener {
 		frame.pack();
 //		frame.setSize(190, 174);
 		frame.setResizable(false);
-		frame.setVisible(true);
 		fco.setFileFilter(new FileNameExtensionFilter("Snakey snakey eggs and bakey (.snake)", "snake"));
 		fco.setAcceptAllFileFilterUsed(false);
 		if (opencli) {
@@ -212,10 +225,12 @@ public class MainGUI extends Kraken implements ActionListener {
 			sys.setSelected(true);
 			nimbus.setSelected(false);
 			metal.setSelected(false);
-			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-			SwingUtilities.updateComponentTreeUI(frame);
-			npce.lafUpdate();
-			ccsm.lafUpdate();
+			if (UIManager.getSystemLookAndFeelClassName() == "javax.swing.plaf.metal.MetalLookAndFeel") {
+					UIManager.setLookAndFeel("com.sun.java.swing.plaf.gtk.GTKLookAndFeel");
+				} else {
+					UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+				}
+			lafUpdate();
 			frame.pack();
 			}
 			if (LAF == 1) {
@@ -223,9 +238,7 @@ public class MainGUI extends Kraken implements ActionListener {
 			nimbus.setSelected(true);
 			metal.setSelected(false);
 			UIManager.setLookAndFeel("javax.swing.plaf.nimbus.NimbusLookAndFeel");
-			SwingUtilities.updateComponentTreeUI(frame);
-			npce.lafUpdate();
-			ccsm.lafUpdate();
+			lafUpdate();
 			frame.pack();
 			}
 			if (LAF == 2) {
@@ -233,11 +246,10 @@ public class MainGUI extends Kraken implements ActionListener {
 			nimbus.setSelected(false);
 			metal.setSelected(true);
 			UIManager.setLookAndFeel("javax.swing.plaf.metal.MetalLookAndFeel");
-			SwingUtilities.updateComponentTreeUI(frame);
-			npce.lafUpdate();
-			ccsm.lafUpdate();
+			lafUpdate();
 			frame.pack();
 		}
+		frame.setVisible(true);
 	} catch (Exception asdfjkl) {}
 }
 		

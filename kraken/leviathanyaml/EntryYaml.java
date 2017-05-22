@@ -90,16 +90,16 @@ public class EntryYaml {
 		int i = -1;
 		List<String[][]> entries = new ArrayList<String[][]>();
 		try {
-			fr = new FileReader(ymlfile);
-			buffr = new BufferedReader(fr);
 			while (line != null) {
+				fr = new FileReader(ymlfile);
+				buffr = new BufferedReader(fr);
 				i++;
 				line = buffr.readLine();
 				if (line.trim().startsWith(Integer.toString(i))) {
 					List<String> keys = new ArrayList<String>();
 					List<String> values = new ArrayList<String>();
 					line = buffr.readLine();
-					for (line = line; !line.trim().startsWith(Integer.toString(i + 1)); line = buffr.readLine()) {
+					for (line = line; !line.trim().endsWith(":"); line = buffr.readLine()) {
 						if (!line.trim().startsWith("#")) {
 							keys.add(line.trim().substring(0, line.trim().lastIndexOf(":")));
 							values.add(line.trim().substring(line.trim().lastIndexOf(":") + 2, line.trim().length()));
@@ -108,7 +108,7 @@ public class EntryYaml {
 					String[] a1 = keys.toArray(new String[keys.size()]);
 					String[] a2 = values.toArray(new String[values.size()]);
 					String[][] arr = { a1, a2 };
-					entries.add(arr);
+					entries.add(i, arr);
 				}
 			}
 		} catch (Exception e) { System.out.println(e.toString()); }

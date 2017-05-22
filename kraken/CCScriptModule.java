@@ -51,7 +51,6 @@ public class CCScriptModule extends Kraken implements ActionListener {
 		currentHackFile.setEnabled(false);
 		fco.setFileFilter(new FileNameExtensionFilter("SNES ROMs: .smc, .sfc", "smc", "sfc"));
 		fco.setAcceptAllFileFilterUsed(false);
-		lafUpdate();
 		frame.pack();
 		frame.setVisible(true);
 		initDone = true;
@@ -59,6 +58,7 @@ public class CCScriptModule extends Kraken implements ActionListener {
 	}
 	
 	public void initDiffGUI() {
+		
 		diffTab.setLayout(lay);
 		lay.setAutoCreateGaps(true);
 		lay.setAutoCreateContainerGaps(true);
@@ -68,6 +68,7 @@ public class CCScriptModule extends Kraken implements ActionListener {
 		lay.linkSize(pointer1, pointer2);
 		lay.linkSize(currentCleanFile, currentHackFile);
 		lay.linkSize(ranget, ranget2);
+		lafUpdate();
 	}
 	
 	public void lafUpdate() {

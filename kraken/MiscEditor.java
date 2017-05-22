@@ -14,9 +14,8 @@ public class MiscEditor extends Kraken implements ActionListener {
 	static JMenuBar bar = new JMenuBar();
 	static JMenu file = new JMenu("File");
 	static JMenuItem close = new JMenuItem("Close");
-	static JMenu help = new JMenu("Help");
-	static JMenuItem about = new JMenuItem("About...");
-	static JFrame helpf = new JFrame("Attract Mode Help");
+	static JMenu other = new JMenu("Other");
+	static JMenuItem help = new JMenuItem("Help");
 	static JLabel lhelp = new JLabel("The Attract Mode pointers point to cutscene labels, so that if the player does not press start for a period of time, the attract mode will be activated and the specified labels will be executed.");
 	static JButton jButton1 = new javax.swing.JButton();
 	static String pointer1;
@@ -135,16 +134,16 @@ public class MiscEditor extends Kraken implements ActionListener {
 		frame.setJMenuBar(bar);
 		bar.add(file);
 		bar.add(Box.createHorizontalGlue());
-		bar.add(help);
+		bar.add(other);
+		other.add(help);
 		file.add(close);
 		close.setAccelerator(ctrlw);
 		close.addActionListener(misced);
-		help.add(about);
-		about.addActionListener(misced);
+		help.addActionListener(misced);
 		frame.pack();
+		lafUpdate();
 		frame.setResizable(false);
 		frame.setVisible(true);
-		lafUpdate();
 		initDone = true;
 	} else { lafUpdate(); getPointers(); frame.setVisible(true); }
 	}
@@ -367,22 +366,17 @@ public class MiscEditor extends Kraken implements ActionListener {
 	public void lafUpdate() {
 		SwingUtilities.updateComponentTreeUI(frame);
 		frame.pack();
-		SwingUtilities.updateComponentTreeUI(helpf);
-		helpf.pack();
 	}
 	
 	public void actionPerformed(ActionEvent e) {
 		Object src = e.getSource();
 		
-		if (src == jButton1) {
-			helpf.setVisible(false);
-		}
 		
 		if (src == close) {
 			frame.setVisible(false);
 		}
 		
-		if (src == about) {
+		if (src == help) {
 		JPanel asdf = new JPanel();
 		javax.swing.JLabel jLabel1;
 		javax.swing.JLabel jLabel2;
@@ -396,8 +390,6 @@ public class MiscEditor extends Kraken implements ActionListener {
 		jLabel4 = new javax.swing.JLabel();
 		jLabel5 = new javax.swing.JLabel();
 		jLabel6 = new javax.swing.JLabel();
-		
-		jButton1.addActionListener(misced);
 
 		jLabel1.setText("The Attract Mode pointers point to");
 
@@ -410,8 +402,6 @@ public class MiscEditor extends Kraken implements ActionListener {
 		jLabel5.setText("activated and the specified labels will");
 
 		jLabel6.setText("be executed.");
-
-		jButton1.setText("Close");
 
 		javax.swing.GroupLayout layout = new javax.swing.GroupLayout(asdf);
 		asdf.setLayout(layout);
@@ -431,9 +421,7 @@ public class MiscEditor extends Kraken implements ActionListener {
 						.addGap(0, 2, Short.MAX_VALUE)))
 				.addContainerGap())
 			.addGroup(layout.createSequentialGroup()
-				.addGap(83, 83, 83)
-				.addComponent(jButton1)
-				.addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+				.addGap(83, 83, 83))
 		);
 		layout.setVerticalGroup(
 			layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -450,13 +438,11 @@ public class MiscEditor extends Kraken implements ActionListener {
 				.addComponent(jLabel5)
 				.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
 				.addComponent(jLabel6)
-				.addGap(88, 88, 88)
-				.addComponent(jButton1)
-				.addContainerGap())
+				.addGap(88, 88, 88))
 		);
-		helpf.add(asdf);
-		helpf.pack();
-		helpf.setVisible(true);
+		JOptionPane dia = new JOptionPane();
+		int result = JOptionPane.showOptionDialog(null, asdf, "Help", JOptionPane.NO_OPTION, JOptionPane.PLAIN_MESSAGE, null, new String[]{ "Close" }, "default");
+		lafUpdate();
 		}
 	}
 }
