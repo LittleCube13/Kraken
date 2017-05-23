@@ -16,4 +16,6 @@ clean:
 
 clean-all: 
 	find . -maxdepth 1 -name "*.class" -delete
-	rm Kraken.jar
+	rm -f Kraken.jar
+	cd leviathanyaml
+	make clean
