@@ -10,3 +10,10 @@ dev:
 	javac @sources.txt
 	rm sources.txt
 	jar cvfe Kraken.jar Kraken *
+
+clean:
+	find . -maxdepth 1 -name "*.class" -delete
+
+clean-all: 
+	find . -maxdepth 1 -name "*.class" -delete
+	rm Kraken.jar

@@ -145,222 +145,44 @@ public class MiscEditor extends Kraken implements ActionListener {
 		frame.setResizable(false);
 		frame.setVisible(true);
 		initDone = true;
-	} else { lafUpdate(); getPointers(); frame.setVisible(true); }
+	} else { lafUpdate(); frame.setVisible(true); }
 	}
 	
 	public void setPointers() {
 		try {
 		File attmod = new File(gui.projectString + File.separator + "attract_mode_txt.yml");
-		FileReader fr = new FileReader(attmod);
-		BufferedReader buff = new BufferedReader(fr);
-		EntryYaml entry = new EntryYaml(attmod);
-		String[] stuff = entry.readEntryLines(0);
-		System.out.println(stuff[0]);
-		String line = "";
-		String File = "";
-		while (line != null) {
-			line = buff.readLine();
-			if (line.startsWith("0")) {
-				File += line;
-				File += "\n";
-				for (line = line; !line.startsWith("1"); line = buff.readLine()) {
-					if (line.trim().startsWith("//")) {
-						File += line;
-						File += "\n";
-					}
-					if (line.lastIndexOf("Pointer:") != -1) {
-						File += line.substring(0, line.lastIndexOf(":")) + ": ";
-						pointer1 = jTextField1.getText();
-						File += pointer1;
-						File += "\n";
-					}
-				}
-			}
-			if (line.startsWith("1")) {
-				File += line;
-				File += "\n";
-				for (line = line; !line.startsWith("2"); line = buff.readLine()) {
-					if (line.trim().startsWith("//")) {
-						File += line;
-						File += "\n";
-					}
-					if (line.lastIndexOf("Pointer:") != -1) {
-						File += line.substring(0, line.lastIndexOf(":")) + ": ";
-						pointer2 = jTextField2.getText();
-						File += pointer2;
-						File += "\n";
-					}
-				}
-			}
-			if (line.startsWith("2")) {
-				File += line;
-				File += "\n";
-				for (line = line; !line.startsWith("3"); line = buff.readLine()) {
-					if (line.trim().startsWith("//")) {
-						File += line;
-						File += "\n";
-					}
-					if (line.lastIndexOf("Pointer:") != -1) {
-						File += line.substring(0, line.lastIndexOf(":")) + ": ";
-						pointer3 = jTextField3.getText();
-						File += pointer3;
-						File += "\n";
-					}
-				}
-			}
-			if (line.startsWith("3")) {
-				File += line;
-				File += "\n";
-				for (line = line; !line.startsWith("4"); line = buff.readLine()) {
-					if (line.trim().startsWith("//")) {
-						File += line;
-						File += "\n";
-					}
-					if (line.lastIndexOf("Pointer:") != -1) {
-						File += line.substring(0, line.lastIndexOf(":")) + ": ";
-						pointer4 = jTextField4.getText();
-						File += pointer4;
-						File += "\n";
-					}
-				}
-			}
-			if (line.startsWith("4")) {
-				File += line;
-				File += "\n";
-				for (line = line; !line.startsWith("5"); line = buff.readLine()) {
-					if (line.trim().startsWith("//")) {
-						File += line;
-						File += "\n";
-					}
-					if (line.lastIndexOf("Pointer:") != -1) {
-						File += line.substring(0, line.lastIndexOf(":")) + ": ";
-						pointer5 = jTextField5.getText();
-						File += pointer5;
-						File += "\n";
-					}
-				}
-			}
-			if (line.startsWith("5")) {
-				File += line;
-				File += "\n";
-				for (line = line; !line.startsWith("6"); line = buff.readLine()) {
-					if (line.trim().startsWith("//")) {
-						File += line;
-						File += "\n";
-					}
-					if (line.lastIndexOf("Pointer:") != -1) {
-						File += line.substring(0, line.lastIndexOf(":")) + ": ";
-						pointer6 = jTextField6.getText();
-						File += pointer6;
-						File += "\n";
-					}
-				}
-			}
-			if (line.startsWith("6")) {
-				File += line;
-				File += "\n";
-				for (line = line; !line.startsWith("7"); line = buff.readLine()) {
-					if (line.trim().startsWith("//")) {
-						File += line;
-						File += "\n";
-					}
-					if (line.lastIndexOf("Pointer:") != -1) {
-						File += line.substring(0, line.lastIndexOf(":")) + ": ";
-						pointer7 = jTextField7.getText();
-						File += pointer7;
-						File += "\n";
-					}
-				}
-			}
-			if (line.startsWith("7")) {
-				File += line;
-				File += "\n";
-				for (line = line; !line.startsWith("8"); line = buff.readLine()) {
-					if (line.trim().startsWith("//")) {
-						File += line;
-						File += "\n";
-					}
-					if (line.lastIndexOf("Pointer:") != -1) {
-						File += line.substring(0, line.lastIndexOf(":")) + ": ";
-						pointer8 = jTextField8.getText();
-						File += pointer8;
-						File += "\n";
-					}
-				}
-			}
-			if (line.startsWith("8")) {
-				File += line;
-				File += "\n";
-				for (line = line; !line.startsWith("9"); line = buff.readLine()) {
-					if (line.trim().startsWith("//")) {
-						File += line;
-						File += "\n";
-					}
-					if (line.lastIndexOf("Pointer:") != -1) {
-						File += line.substring(0, line.lastIndexOf(":")) + ": ";
-						pointer9 = jTextField9.getText();
-						File += pointer9;
-						File += "\n";
-					}
-				}
-			}
-			if (line.startsWith("9")) {
-				File += line;
-				File += "\n";
-				for (line = line; line != null; line = buff.readLine()) {
-					if (line.trim().startsWith("//")) {
-						File += line;
-						File += "\n";
-					}
-					if (line.lastIndexOf("Pointer:") != -1) {
-						File += line.substring(0, line.lastIndexOf(":")) + ": ";
-						pointer10 = jTextField10.getText();
-						File += pointer10;
-						File += "\n";
-					}
-				}
-			}
-			if (line == null) {
-				break;
-			}
-			if (line.indexOf("//") != -1) {
-				File += line;
-				File += "\n";
-			}
-		}
-		buff.close();
-		FileWriter fw = new FileWriter(attmod);
-		BufferedWriter buffw = new BufferedWriter(fw);
-		buffw.write(File, 0, File.length());
-		buffw.close();
-		} catch (Exception sffsfsfsfsfsfsfsfsfs) { System.err.println(sffsfsfsfsfsfsfsfsfs.toString()); }
+		EntryYaml attmodyml = new EntryYaml(attmod);
+		String[][][] stuff = attmodyml.readAllEntries();
+		stuff[0][1][0] = jTextField1.getText();
+		stuff[1][1][0] = jTextField2.getText();
+		stuff[2][1][0] = jTextField3.getText();
+		stuff[3][1][0] = jTextField4.getText();
+		stuff[4][1][0] = jTextField5.getText();
+		stuff[5][1][0] = jTextField6.getText();
+		stuff[6][1][0] = jTextField7.getText();
+		stuff[7][1][0] = jTextField8.getText();
+		stuff[8][1][0] = jTextField9.getText();
+		stuff[9][1][0] = jTextField10.getText();
+		attmodyml.writeAllEntries(stuff);
+		} catch (Exception sffsfsfsfsfsfsfsfsfs) { System.err.println("Whoops! Error in function setPointers(): " + sffsfsfsfsfsfsfsfsfs.toString()); }
 	}
 	
 	void getPointers() {
 		try {
 			File attmod = new File(gui.projectString + File.separator + "attract_mode_txt.yml");
 			EntryYaml attmodyml = new EntryYaml(attmod);
-			String[] entry = attmodyml.readEntryValues(0);
-			jTextField1.setText(entry[0]);
-			entry = attmodyml.readEntryValues(1);
-			jTextField2.setText(entry[0]);
-			entry = attmodyml.readEntryValues(2);
-			jTextField3.setText(entry[0]);
-			entry = attmodyml.readEntryValues(3);
-			jTextField4.setText(entry[0]);
-			entry = attmodyml.readEntryValues(4);
-			jTextField5.setText(entry[0]);
-			entry = attmodyml.readEntryValues(5);
-			jTextField6.setText(entry[0]);
-			entry = attmodyml.readEntryValues(6);
-			jTextField7.setText(entry[0]);
-			entry = attmodyml.readEntryValues(7);
-			jTextField8.setText(entry[0]);
-			entry = attmodyml.readEntryValues(8);
-			jTextField9.setText(entry[0]);
-			entry = attmodyml.readEntryValues(9);
-			jTextField10.setText(entry[0]);
-		} catch (Exception shutup) { System.err.println(shutup.toString()); }
+			String[][][] entries = attmodyml.readAllEntries();
+			jTextField1.setText(entries[0][1][0]);
+			jTextField2.setText(entries[1][1][0]);
+			jTextField3.setText(entries[2][1][0]);
+			jTextField4.setText(entries[3][1][0]);
+			jTextField5.setText(entries[4][1][0]);
+			jTextField6.setText(entries[5][1][0]);
+			jTextField7.setText(entries[6][1][0]);
+			jTextField8.setText(entries[7][1][0]);
+			jTextField9.setText(entries[8][1][0]);
+			jTextField10.setText(entries[9][1][0]);
+		} catch (Exception shutup) { System.err.println("Whoops! Error in function getPointers(): " + shutup.toString()); }
 	}
 	
 	public void lafUpdate() {

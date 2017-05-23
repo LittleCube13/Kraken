@@ -30,12 +30,11 @@ public class Preferences extends Kraken {
 }
 	
 	public void setLastProject(File lp) {
-		boolean b = gui.openlastproject.getState();
-		int laflaf = gui.LAF;
+		getAll();
 		try {
 			fw = new FileWriter(prefs);
 			buffw = new BufferedWriter(fw);
-			buffw.write(b + "\n" + lp.toString() + "\n" + Integer.toString(laflaf));
+			buffw.write(openatstart + "\n" + lp.toString() + "\n" + Integer.toString(lafint));
 			buffw.close();
 		} catch (Exception ashdfhfl) { System.err.println(ashdfhfl.toString()); }
 }
@@ -54,9 +53,12 @@ public class Preferences extends Kraken {
 		try {
 			fr = new FileReader(prefs);
 			buff = new BufferedReader(fr);
-			gui.openlastproject.setState(Boolean.parseBoolean(buff.readLine()));
-			gui.currentProject = new File(buff.readLine());
-			gui.LAF = Integer.parseInt(buff.readLine());
+			openatstart = Boolean.parseBoolean(buff.readLine());
+			gui.openlastproject.setState(openatstart);
+			projectlast = new File(buff.readLine());
+			gui.currentProject = projectlast;
+			lafint = Integer.parseInt(buff.readLine());
+			gui.LAF = lafint;
 			buff.close();
 		} catch (Exception asdlffj) {}
 	}

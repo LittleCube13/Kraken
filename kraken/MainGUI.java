@@ -52,7 +52,7 @@ public class MainGUI extends Kraken implements ActionListener {
 		}
 		
 		if (src == save) {
-			misced.setPointers();
+			saveProject(projectString);
 		}
 		
 		if (src == map) {
@@ -132,6 +132,10 @@ public class MainGUI extends Kraken implements ActionListener {
 		System.out.println(currentProject.toString());
 	}
 	
+	static void saveProject(String proj) {
+		misced.setPointers();
+	}
+	
 	public static void initGUI(boolean opencli, String projecttoopen) {
 	
 	if (!initDone) {	
@@ -202,23 +206,17 @@ public class MainGUI extends Kraken implements ActionListener {
 		if (opencli) {
 			projectString = projecttoopen;
 			if (projecttoopen.endsWith("Project.snake")) { projectString = projectString.substring(0, projectString.lastIndexOf("Project.snake") - 1); }
-			frame.setTitle(projectString.substring(projectString.lastIndexOf("/") + 1, projectString.length()));
-			ccs.setEnabled(true);
-			misc.setEnabled(true);
-			currentProject = new File(projectString);
-			prfs.setLastProject(currentProject);
+			openProject(projectString);
 		}
 		if (!prfs.dir.exists()) {
 			prfs.createNewPreferences();
 		} else {
 			prfs.getAll();
-			if (openlastproject.getState()) {
-				if (!opencli) {
+			if (prfs.openatstart && !opencli) {
 					projectString = currentProject.toString();
 					frame.setTitle(projectString.substring(projectString.lastIndexOf("/") + 1, projectString.length()));
 					ccs.setEnabled(true);
 					misc.setEnabled(true);
-				}
 			}
 			try {
 			if (LAF == 0) {
