@@ -43,7 +43,7 @@ public abstract class ToolModule {
 	public final static String DEFAULT_DATA_DIR = "ebhack/data/";
 	
 	protected YMLPreferences prefs;
-	protected JFrame mainWindow;
+	public static JFrame mainWindow;
 	protected boolean isInited = false;
 	
 	public ToolModule(YMLPreferences prefs) {

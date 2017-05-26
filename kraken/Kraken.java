@@ -7,6 +7,8 @@ public class Kraken {
 	public static Kraken app = new Kraken();
 	public static MainGUI gui = new MainGUI();
 	public static NPCEditor npce = new NPCEditor();
+	public static BattleEditor batted = new BattleEditor();
+	public static MapEditor maped = new MapEditor();
 	public static CCScriptModule ccsm = new CCScriptModule();
 	public static ROMtoCCS rtccs = new ROMtoCCS();
 	public static Preferences prfs = new Preferences();

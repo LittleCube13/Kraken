@@ -102,6 +102,7 @@ public class MapEditor extends ToolModule implements ActionListener,
 	}
 
 	public void init() {
+		try {
 		mainWindow = createBaseWindow(this);
 		mainWindow.setTitle(this.getDescription());
 		mainWindow.addComponentListener(this);
@@ -317,7 +318,9 @@ public class MapEditor extends ToolModule implements ActionListener,
 				prefs, this);
 		mapDisplay.addMouseWheelListener(this);
 		mapDisplay.addActionListener(this);
+		System.out.println("we got here");
 		mapDisplay.init();
+		System.out.println("but not here");
 		contentPanel.add(mapDisplay, BorderLayout.CENTER);
 
 		xScroll = new JScrollBar(JScrollBar.HORIZONTAL, 0,
@@ -345,6 +348,7 @@ public class MapEditor extends ToolModule implements ActionListener,
 		mainWindow.validate();
 		// mainWindow.setResizable(false);
 		mainWindow.setResizable(true);
+	} catch (Exception e) { System.err.println("Whoops! Error in function ebhack.MapEditor.init(): " + e.toString()); }
 	}
 
 	private void loadTilesetNames() {

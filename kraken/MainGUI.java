@@ -56,10 +56,15 @@ public class MainGUI extends Kraken implements ActionListener {
 		}
 		
 		if (src == map) {
+			maped.init();
 		}
 		
 		if (src == npcs) {
 			npce.init();
+		}
+		
+		if (src == battle) {
+			batted.init();
 		}
 		
 		if (src == ccs) {
@@ -119,6 +124,7 @@ public class MainGUI extends Kraken implements ActionListener {
 		npce.lafUpdate();
 		ccsm.lafUpdate();
 		misced.lafUpdate();
+		batted.lafUpdate();
 	}
 	
 	static void openProject(String proj) {
@@ -126,14 +132,18 @@ public class MainGUI extends Kraken implements ActionListener {
 		projectString = proj;
 		frame.setTitle(projectString.substring(projectString.lastIndexOf("/") + 1, projectString.length()));
 		misced.getPointers();
+		batted.getEntries();
 		ccs.setEnabled(true);
 		misc.setEnabled(true);
+		map.setEnabled(true);
+		battle.setEnabled(true);
 		prfs.setLastProject(currentProject);
 		System.out.println(currentProject.toString());
 	}
 	
 	static void saveProject(String proj) {
 		misced.setPointers();
+		batted.saveEntries();
 	}
 	
 	public static void initGUI(boolean opencli, String projecttoopen) {
@@ -214,9 +224,7 @@ public class MainGUI extends Kraken implements ActionListener {
 			prfs.getAll();
 			if (prfs.openatstart && !opencli) {
 					projectString = currentProject.toString();
-					frame.setTitle(projectString.substring(projectString.lastIndexOf("/") + 1, projectString.length()));
-					ccs.setEnabled(true);
-					misc.setEnabled(true);
+					openProject(projectString);
 			}
 			try {
 			if (LAF == 0) {

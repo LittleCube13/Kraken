@@ -5,8 +5,9 @@ import java.util.*;
 public abstract class YamlUtil {
 	
 	public static int getKey(String key, String[][] entry) {
-		for (int i = 0; i < entry.length; i++) {
-			if (entry[0][i].equals(key)) {
+		for (int i = 0; i == i; i++) {
+			System.out.println(key + " " + entry[0][i]);
+			if (entry[0][i].trim().equals(key.trim())) {
 				return i;
 			}
 		}
@@ -14,8 +15,8 @@ public abstract class YamlUtil {
 	}
 	
 	public static int getKey(String key, String[][][] entry) {
-		for (int i = 0; i < entry.length; i++) {
-			if (entry[0][0][i].equals(key)) {
+		for (int i = 0; i == i; i++) {
+			if (entry[0][0][i].trim().equals(key.trim())) {
 				return i;
 			}
 		}
@@ -26,5 +27,14 @@ public abstract class YamlUtil {
 		while (arr.size() < size) {
 			arr.add(null);
 		}
+	}
+	
+	public static int[] convertIntegers(List<Integer> integers) {
+		int[] ret = new int[integers.size()];
+		Iterator<Integer> iterator = integers.iterator();
+		for (int i = 0; i < ret.length; i++) {
+			ret[i] = iterator.next().intValue();
+		}
+		return ret;
 	}
 }

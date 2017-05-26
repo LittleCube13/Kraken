@@ -38,7 +38,7 @@ public class MainGUI implements ActionListener, WindowListener {
 	private JFrame mainWindow;
 	private ArrayList<ToolModule> moduleList = new ArrayList<ToolModule>();
 	private ArrayList<JButton> moduleButtons = new ArrayList<JButton>();
-	private YMLPreferences prefs;
+	public YMLPreferences prefs;
 	private Project project;
 
 	JMenuItem close, save, refresh, projProp;
@@ -609,7 +609,8 @@ public class MainGUI implements ActionListener, WindowListener {
 			if (closeProject()) {
 				setStatusBar("Exiting...");
 				this.prefs.save();
-				System.exit(0);
+//				System.exit(0);
+				mainWindow.setVisible(false);
 			} else
 				exitBusy();
 		}
