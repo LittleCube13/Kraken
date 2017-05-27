@@ -5,7 +5,7 @@ import java.util.*;
 public abstract class YamlUtil {
 	
 	public static int getKey(String key, String[][] entry) {
-		for (int i = 0; i == i; i++) {
+		for (int i = 0; i < entry[0].length; i++) {
 			System.out.println(key + " " + entry[0][i]);
 			if (entry[0][i].trim().equals(key.trim())) {
 				return i;
@@ -15,7 +15,7 @@ public abstract class YamlUtil {
 	}
 	
 	public static int getKey(String key, String[][][] entry) {
-		for (int i = 0; i == i; i++) {
+		for (int i = 0; i < entry[0][0].length; i++) {
 			if (entry[0][0][i].trim().equals(key.trim())) {
 				return i;
 			}
