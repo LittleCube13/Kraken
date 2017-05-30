@@ -30,6 +30,7 @@ public class MainGUI extends Kraken implements ActionListener {
 	static JButton map = new JButton("Map");
 	static JButton ccs = new JButton("CCScript");
 	static JButton npcs = new JButton("NPCs");
+	static JButton item = new JButton("Items");
 	static JButton battle = new JButton("Battle");
 	static JButton misc = new JButton("Misc.");
 	static boolean initDone;
@@ -61,6 +62,10 @@ public class MainGUI extends Kraken implements ActionListener {
 		
 		if (src == npcs) {
 			npce.init();
+		}
+		
+		if (src == item) {
+			
 		}
 		
 		if (src == battle) {
@@ -136,6 +141,7 @@ public class MainGUI extends Kraken implements ActionListener {
 		ccs.setEnabled(true);
 		misc.setEnabled(true);
 		map.setEnabled(true);
+		item.setEnabled(true);
 		battle.setEnabled(true);
 		prfs.setLastProject(currentProject);
 		System.out.println(currentProject.toString());
@@ -162,18 +168,16 @@ public class MainGUI extends Kraken implements ActionListener {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		GroupLayout layout = new GroupLayout(win);
 		ccs.setPreferredSize(new Dimension(175, 26));
-		map.setPreferredSize(new Dimension(175, 26));
-		npcs.setPreferredSize(new Dimension(175, 26));
-		battle.setPreferredSize(new Dimension(175, 26));
 		win.setLayout(layout);
 		layout.setAutoCreateGaps(true);
 		layout.setAutoCreateContainerGaps(true);
-		layout.setHorizontalGroup(layout.createParallelGroup().addComponent(ccs).addComponent(map).addComponent(npcs).addComponent(battle).addComponent(misc));
-		layout.setVerticalGroup(layout.createSequentialGroup().addComponent(ccs).addComponent(map).addComponent(npcs).addComponent(battle).addComponent(misc));
-		layout.linkSize(ccs, map, npcs, battle, misc);
+		layout.setHorizontalGroup(layout.createParallelGroup().addComponent(ccs).addComponent(map).addComponent(npcs).addComponent(item).addComponent(battle).addComponent(misc));
+		layout.setVerticalGroup(layout.createSequentialGroup().addComponent(ccs).addComponent(map).addComponent(npcs).addComponent(item).addComponent(battle).addComponent(misc));
+		layout.linkSize(ccs, map, npcs, item, battle, misc);
 		ccs.setEnabled(false);
 		map.setEnabled(false);
 		npcs.setEnabled(false);
+		item.setEnabled(false);
 		battle.setEnabled(false);
 		misc.setEnabled(false);
 		ccs.addActionListener(gui);

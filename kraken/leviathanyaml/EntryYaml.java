@@ -146,38 +146,6 @@ public class EntryYaml {
 		} catch (Exception safsdfsdfasdfasdfasdfasdfasdfasdf) { System.err.println("Whoops! Error in function writeEntry(): " + safsdfsdfasdfasdfasdfasdfasdfasdf.toString()); }
 	}
 	
-	public void _writeAllEntries(String[][][] entry) {
-		try {
-		String line = "";
-		String readfile = "";
-		boolean succeeded = false;
-		int entryNo = 0;
-		fr = new FileReader(ymlfile);
-		buffr = new BufferedReader(fr);
-		line = buffr.readLine();
-		while (line != null) {
-			readfile += line + "\n";
-			line = buffr.readLine();
-		}
-		String[] readfilea = readfile.split(System.getProperty("line.separator"));
-		fr = new FileReader(ymlfile);
-		buffr = new BufferedReader(fr);
-		for (int i = 0; i < readfilea.length; i = i) {
-			if (readfilea[i].trim().endsWith(":")) {
-				entryNo = Integer.parseInt(readfilea[i].trim().substring(0, readfilea[i].lastIndexOf(":")));
-				if (i + 1 < readfilea.length) {
-					i++;
-				} else {
-					break;
-				}
-				while (!readfilea[i].endsWith(":") || !succeeded) {
-					
-				}
-			}
-		}
-		} catch (Exception e) { System.err.println("Whoops! Error in function writeAllEntries(): " + e.toString()); }
-	}
-	
 	public void writeMultipleEntries(int[] entryNo, String[][][] entry) {
 		for (int i = 0; i < entryNo.length; i++) {
 			writeEntry(entryNo[i], entry[entryNo[i]]);
@@ -217,6 +185,7 @@ public class EntryYaml {
 						} else {
 							break;
 						}
+						System.out.println(readfilea[i]);
 					}
 				} else {
 					if (i + 1 < readfilea.length) {
