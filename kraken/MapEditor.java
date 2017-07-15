@@ -1,6 +1,7 @@
 import ebhack.*;
 import javax.swing.*;
 import java.awt.*;
+import java.io.*;
 
 public class MapEditor extends Kraken {
 	
@@ -10,10 +11,11 @@ public class MapEditor extends Kraken {
 	public void init() {
 		try {
 		ebhack.Ebhack ebhackruntime = new ebhack.Ebhack();
-		ebhackruntime.main(new String[]{ gui.projectString });
+		ebhack.MainGUI ebhackmaingui = new ebhack.MainGUI();
+		ebhackruntime.main(new String[]{ gui.projectString + File.separator + "Project.snake" });
 		ebhack.MapEditor mapedi = new ebhack.MapEditor(ebhackruntime.main.prefs);
 		mapedi.init();
-		win = ToolModule.mainWindow.getContentPane();
+		win = mapedi.mainWindow.getContentPane();
 		frame.add(win);
 		frame.pack();
 		frame.setResizable(false);

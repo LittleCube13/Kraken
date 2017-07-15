@@ -103,6 +103,7 @@ public class MapEditor extends ToolModule implements ActionListener,
 
 	public void init() {
 		try {
+		System.out.println("we got here");
 		mainWindow = createBaseWindow(this);
 		mainWindow.setTitle(this.getDescription());
 		mainWindow.addComponentListener(this);
@@ -318,9 +319,7 @@ public class MapEditor extends ToolModule implements ActionListener,
 				prefs, this);
 		mapDisplay.addMouseWheelListener(this);
 		mapDisplay.addActionListener(this);
-		System.out.println("we got here");
 		mapDisplay.init();
-		System.out.println("but not here");
 		contentPanel.add(mapDisplay, BorderLayout.CENTER);
 
 		xScroll = new JScrollBar(JScrollBar.HORIZONTAL, 0,

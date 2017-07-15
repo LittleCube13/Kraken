@@ -174,7 +174,6 @@ public class EntryYaml {
 					} else {
 						break;
 					}
-					System.out.println(readfilea[i]);
 					while (!readfilea[i].trim().endsWith(":")) {
 						if (!readfilea[i].trim().startsWith("#")) {
 							String currkey = readfilea[i].substring(0, readfilea[i].lastIndexOf(":"));
@@ -185,7 +184,6 @@ public class EntryYaml {
 						} else {
 							break;
 						}
-						System.out.println(readfilea[i]);
 					}
 				} else {
 					if (i + 1 < readfilea.length) {

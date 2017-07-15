@@ -25,6 +25,7 @@ public class CCScriptModule extends Kraken implements ActionListener {
 	static JButton diff = new JButton("Diff ROMs");
 	static JTextField currentCleanFile = new JTextField("", 24);
 	static JTextField currentHackFile = new JTextField("", 24);
+	static JTextField outputName = new JTextField("AAA_KRAKEN_BASE_DIFF.ccs", 24);
 	static JTextField pointer1 = new JTextField("", 12);
 	static JTextField pointer2 = new JTextField("", 12);
 	static JLabel ranget = new JLabel("Range Start:");
@@ -62,11 +63,11 @@ public class CCScriptModule extends Kraken implements ActionListener {
 		diffTab.setLayout(lay);
 		lay.setAutoCreateGaps(true);
 		lay.setAutoCreateContainerGaps(true);
-		lay.setHorizontalGroup(lay.createSequentialGroup().addGroup(lay.createParallelGroup(GroupLayout.Alignment.CENTER).addComponent(openROM).addComponent(hackROMbutton).addComponent(diff)).addGroup(lay.createParallelGroup(GroupLayout.Alignment.CENTER).addComponent(currentCleanFile).addComponent(currentHackFile)).addGroup(lay.createParallelGroup(GroupLayout.Alignment.LEADING).addComponent(ranget).addComponent(ranget2)).addGroup(lay.createParallelGroup(GroupLayout.Alignment.LEADING).addComponent(pointer1).addComponent(pointer2)));
-		lay.setVerticalGroup(lay.createSequentialGroup().addGroup(lay.createParallelGroup(GroupLayout.Alignment.CENTER).addComponent(openROM).addComponent(currentCleanFile).addComponent(ranget).addComponent(pointer1)).addGroup(lay.createParallelGroup(GroupLayout.Alignment.CENTER).addComponent(hackROMbutton).addComponent(currentHackFile).addComponent(ranget2).addComponent(pointer2)).addComponent(diff));
+		lay.setHorizontalGroup(lay.createSequentialGroup().addGroup(lay.createParallelGroup(GroupLayout.Alignment.CENTER).addComponent(openROM).addComponent(hackROMbutton).addComponent(diff)).addGroup(lay.createParallelGroup(GroupLayout.Alignment.CENTER).addComponent(currentCleanFile).addComponent(currentHackFile).addComponent(outputName)).addGroup(lay.createParallelGroup(GroupLayout.Alignment.LEADING).addComponent(ranget).addComponent(ranget2)).addGroup(lay.createParallelGroup(GroupLayout.Alignment.LEADING).addComponent(pointer1).addComponent(pointer2)));
+		lay.setVerticalGroup(lay.createSequentialGroup().addGroup(lay.createParallelGroup(GroupLayout.Alignment.CENTER).addComponent(openROM).addComponent(currentCleanFile).addComponent(ranget).addComponent(pointer1)).addGroup(lay.createParallelGroup(GroupLayout.Alignment.CENTER).addComponent(hackROMbutton).addComponent(currentHackFile).addComponent(ranget2).addComponent(pointer2)).addGroup(lay.createParallelGroup(GroupLayout.Alignment.CENTER).addComponent(diff).addComponent(outputName)));
 		lay.linkSize(openROM, hackROMbutton, diff);
 		lay.linkSize(pointer1, pointer2);
-		lay.linkSize(currentCleanFile, currentHackFile);
+		lay.linkSize(currentCleanFile, currentHackFile, outputName);
 		lay.linkSize(ranget, ranget2);
 		lafUpdate();
 	}
@@ -81,7 +82,7 @@ public class CCScriptModule extends Kraken implements ActionListener {
 		
 		if (src == diff) {
 			try {
-			if (currentCleanFile.getText() != "" && currentHackFile.getText() != "" && pointer1.getText() != "" && pointer2.getText() != "") {
+			if (currentCleanFile.getText() != "" && currentHackFile.getText() != "" && pointer1.getText() != "" && pointer2.getText() != "" && outputName.getText() != "") {
 						
 						int unorange = Integer.parseInt(pointer1.getText(), 16);
 						int dosrange = Integer.parseInt(pointer2.getText(), 16);
@@ -94,7 +95,23 @@ public class CCScriptModule extends Kraken implements ActionListener {
 							dosrange -= 0xC00000;
 						}
 						
-						rtccs.runDiff(ROM, f, unorange, dosrange);
+						String outfile = "";
+						
+						if (outputName.getText().endsWith(".ccs")) {
+							outfile = outputName.getText();
+						} else {
+							outfile = outputName.getText() + ".ccs";
+						}
+						
+						File foutfile = new File(gui.projectString + File.separator + "ccscript" + File.separator + outfile);
+						
+						if (foutfile.getAbsoluteFile().exists()) {
+							if (dia.showConfirmDialog(null, "File " + outfile + " already exists. Would you like to replace it?", "File exists", JOptionPane.YES_NO_OPTION) == JOptionPane.NO_OPTION) {
+								return;
+							}
+						}
+						
+						rtccs.runDiff(ROM, f, unorange, dosrange, foutfile);
 				}
 			} catch (Exception excep) { dia.showMessageDialog(null, "Please fill in all fields with their correct values.", "You screwed up", JOptionPane.ERROR_MESSAGE); System.err.println(excep.toString()); }
 		}

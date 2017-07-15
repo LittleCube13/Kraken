@@ -9,7 +9,6 @@ public class ROMtoCCS extends Kraken {
 	static FileInputStream hackreader;
 	static byte[] basebytes;
 	static byte[] hackbytes;
-	static File diffccs;
 	static JOptionPane dia = new JOptionPane();
 	static String difffile = "// note that this currently may only work with unheadered ROMs.\n\n";
 	static boolean headered;
@@ -30,7 +29,7 @@ public class ROMtoCCS extends Kraken {
 	}
 }
 }
-	public void runDiff(File baserom, File hackrom, int range1, int range2) {
+	public void runDiff(File baserom, File hackrom, int range1, int range2, File outfile) {
 	
 	try {
 		ROMreader = new FileInputStream(baserom);
@@ -48,7 +47,7 @@ public class ROMtoCCS extends Kraken {
 			return;
 		}
 		System.out.println(headered);
-		System.out.println(diffccs);
+		System.out.println(outfile);
 		System.out.println(basebytes.length);
 		System.out.println(hackbytes.length);
 		System.out.println(baserom.toString());
@@ -65,12 +64,11 @@ public class ROMtoCCS extends Kraken {
 					addToCCS(it, stupid, range1, range2);
 			}
 		}
-		diffccs = new File(gui.projectString + "/ccscript/KRAKEN_BASE_DIFF.ccs");
-		FileWriter fw = new FileWriter(diffccs);
+		FileWriter fw = new FileWriter(outfile);
 		BufferedWriter buff = new BufferedWriter(fw);
 		buff.write(difffile);
 		buff.close();
-		dia.showMessageDialog(null, "Kraken has completed the diff. You can now compile your project with a clean base ROM.", "Success!", JOptionPane.INFORMATION_MESSAGE);
+		dia.showMessageDialog(null, "Kraken has completed the diff.", "Success!", JOptionPane.INFORMATION_MESSAGE);
 	}
 	}
 	catch (IOException ioe) { System.err.println(ioe.toString()); }

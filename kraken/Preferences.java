@@ -1,92 +1,61 @@
 import java.io.*;
 import java.awt.event.*;
 
+import leviathanyaml.*;
+
 public class Preferences extends Kraken {
 	
 	static File home = new File(System.getProperty("user.home"));
-	static File dir = new File(home + "/.leviathan");
-	static File prefs = new File(dir + "/prefs.txt");
-	static FileReader fr;
-	static BufferedReader buff;
-	static FileWriter fw;
-	static BufferedWriter buffw;
-	boolean openatstart;
-	File projectlast;
-	int lafint;
+	static File prefs = new File(home + File.separator + ".leviathan.yml");
+	static GenericYaml prefsyml = new GenericYaml(prefs);
+	static String[][] prefsarr;
+	
+	public static boolean prefExists(String key) {
+		if (YamlUtil.getKey(key, prefsarr) != -1) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+	
+	public static boolean prefsExists() {
+		return prefs.exists();
+	}
 	
 	public void createNewPreferences() {
-			dir.mkdirs();
+		if (!prefsExists()) {
+			prefsarr = YamlUtil.appendItem(prefsarr);
+			save();
+		} else {
+			load();
+		}
 	}
 	
-	public void setOpenAtStart(boolean b) {
-		File lp = gui.currentProject;
-		int laflaf = gui.LAF;
-		try {
-			fw = new FileWriter(prefs);
-			buffw = new BufferedWriter(fw);
-			buffw.write(b + "\n" + lp.toString() + "\n" + Integer.toString(laflaf));
-			buffw.close();
-		} catch (Exception asdlfj) {}
-}
-	
-	public void setLastProject(File lp) {
-		getAll();
-		try {
-			fw = new FileWriter(prefs);
-			buffw = new BufferedWriter(fw);
-			buffw.write(openatstart + "\n" + lp.toString() + "\n" + Integer.toString(lafint));
-			buffw.close();
-		} catch (Exception ashdfhfl) { System.err.println(ashdfhfl.toString()); }
-}
-	public void setLAF(int laflaf) {
-		boolean b = gui.openlastproject.getState();
-		File lp = gui.currentProject;
-		try {
-		fw = new FileWriter(prefs);
-		buffw = new BufferedWriter(fw);
-		buffw.write(b + "\n" + lp.toString() + "\n" + Integer.toString(laflaf));
-		buffw.close();
-	} catch (Exception asdlfkjbg) {}
-}
-	
-	public void getAll() {
-		try {
-			fr = new FileReader(prefs);
-			buff = new BufferedReader(fr);
-			openatstart = Boolean.parseBoolean(buff.readLine());
-			gui.openlastproject.setState(openatstart);
-			projectlast = new File(buff.readLine());
-			gui.currentProject = projectlast;
-			lafint = Integer.parseInt(buff.readLine());
-			gui.LAF = lafint;
-			buff.close();
-		} catch (Exception asdlffj) {}
+	public String getPref(String key) {
+		if (prefExists(key)) {
+			return prefsarr[1][YamlUtil.getKey(key, prefsarr)];
+		} else {
+			return "null";
+		}
 	}
 	
-	public boolean getOpenAtStart() {
-		try {
-		boolean openatstart = Boolean.parseBoolean(buff.readLine());
-		buff.close();
-	} catch (IOException ioex) { System.err.println(ioex.toString()); }
-	return openatstart;
-}
+	public void setPref(String key, String input) {
+		if (prefExists(key)) {
+			prefsarr[1][YamlUtil.getKey(key, prefsarr)] = input;
+		} else {
+			prefsarr = YamlUtil.appendItem(prefsarr);
+			prefsarr[0][prefsarr[0].length - 1] = key;
+			prefsarr[1][YamlUtil.getKey(key, prefsarr)] = input;
+		}
+		prefsarr = YamlUtil.sortArray(prefsarr);
+		save();
+	}
 	
-	public File getLastProject() {
-		try {
-		buff.readLine();
-		projectlast = new File(buff.readLine());
-		buff.close();
-	} catch (IOException ioexc) { System.err.println(ioexc.toString()); }
-	return projectlast;
-}
+	void load() {
+		prefsarr = prefsyml.readAllLines();
+	}
 	
-	public int getLAF() {
-		try {
-		buff.readLine();
-		buff.readLine();
-		lafint = Integer.parseInt(buff.readLine());
-		buff.close();
-	} catch (IOException ioexce) { System.err.println(ioexce.toString()); }
-	return lafint;
+	void save() {
+		prefsyml.writeAllLines(prefsarr);
 	}
 }
